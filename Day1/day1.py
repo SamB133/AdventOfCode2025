@@ -1,14 +1,14 @@
 # Advent of Code 2025 - Day 1
 
-# Part 1 - Read how many times the dial stops on 0
-number_of_zeros = 0
-curr_number = 50
-dial_numbers = [i for i in range(100)]  # Dial numbers from 0 to 99
+def get_lines_from_file(filename):
+	with open(filename) as file:
+		return file.readlines()
 
-with open("input.txt") as file:
-	lines = file.readlines()
+# Part 1 - Read how many times the dial stops on 0
+def part_1(lines):
+	number_of_zeros = 0
+	curr_number = 50
 	for line in lines:
-		#print("Current line:", line.strip())
 		if line.startswith('R'):
 			steps = int(line[1:])
 			curr_number = (curr_number + steps) % 100
@@ -19,17 +19,13 @@ with open("input.txt") as file:
 		if curr_number == 0:
 			number_of_zeros += 1
 		
-		#print("Updated curr_number:", curr_number)
-print("Part 1:", number_of_zeros)
+	print("Part 1:", number_of_zeros)
 
 # Part 2 - Read how many times the dial goes past or stops on 0
-number_of_zeros_or_past = 0
-curr_number = 50
-
-with open("input.txt") as file:
-	lines = file.readlines()
+def part_2(lines):
+	number_of_zeros_or_past = 0
+	curr_number = 50
 	for line in lines:
-		#print("Current line:", line.strip())
 		if line.startswith('R'):
 			steps = int(line[1:])
 			for _ in range(steps):
@@ -42,6 +38,9 @@ with open("input.txt") as file:
 				curr_number = (curr_number - 1) % 100
 				if curr_number == 0:
 					number_of_zeros_or_past += 1
-		
-		#print("Updated curr_number:", curr_number)
-print("Part 2:", number_of_zeros_or_past)
+	print("Part 2:", number_of_zeros_or_past)
+
+if __name__ == "__main__":
+	lines = get_lines_from_file("input.txt")
+	part_1(lines)
+	part_2(lines)

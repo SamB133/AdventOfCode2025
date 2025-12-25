@@ -9,11 +9,11 @@ def part_1(lines):
 	number_of_zeros = 0
 	curr_number = 50
 	for line in lines:
+		line = line.strip()
+		steps = int(line[1:])
 		if line.startswith('R'):
-			steps = int(line[1:])
 			curr_number = (curr_number + steps) % 100
 		elif line.startswith('L'):
-			steps = int(line[1:])
 			curr_number = (curr_number - steps) % 100
 		
 		if curr_number == 0:
@@ -26,18 +26,17 @@ def part_2(lines):
 	number_of_zeros_or_past = 0
 	curr_number = 50
 	for line in lines:
+		line = line.strip()
+		steps = int(line[1:])
 		if line.startswith('R'):
-			steps = int(line[1:])
-			for _ in range(steps):
-				curr_number = (curr_number + 1) % 100
-				if curr_number == 0:
-					number_of_zeros_or_past += 1
+			number_of_zeros_or_past += (curr_number + steps) // 100
+			curr_number = (curr_number + steps) % 100
 		elif line.startswith('L'):
-			steps = int(line[1:])
-			for _ in range(steps):
-				curr_number = (curr_number - 1) % 100
-				if curr_number == 0:
-					number_of_zeros_or_past += 1
+			if curr_number == 0:
+				number_of_zeros_or_past += steps // 100
+			elif steps >= curr_number:
+				number_of_zeros_or_past += 1 + ((steps - curr_number) // 100)
+			curr_number = (curr_number - steps) % 100
 	print("Part 2:", number_of_zeros_or_past)
 
 if __name__ == "__main__":
